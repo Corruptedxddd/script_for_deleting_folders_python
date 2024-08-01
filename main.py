@@ -16,25 +16,24 @@ def initial():
         initial()
 
 def print_subfolders(root_dir):
-    # Traverse through the directory tree
     for dirpath, dirnames, filenames in os.walk(root_dir):
         for dirname in dirnames:
             subfolder_path = os.path.join(dirpath, dirname)
 
             print(subfolder_path)
 def print_and_delete_sample_folders(root_dir):
-    # Traverse through the directory tree
+
     for dirpath, dirnames, filenames in os.walk(root_dir):
         for dirname in dirnames:
             subfolder_path = os.path.join(dirpath, dirname)
             print(subfolder_path)
-            # Check if the folder is named 'Sample'
+
             if dirname == 'Sample':
                 try:
                     shutil.rmtree(subfolder_path)
                     print(f'Deleted: {subfolder_path}')
                 except Exception as e:
                     print(f'Error deleting {subfolder_path}: {e}')
-# Set the root directory from where to start
+
 
 initial()
