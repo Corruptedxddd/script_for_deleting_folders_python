@@ -1,5 +1,6 @@
 import os
 import shutil
+import re
 
 
 def initial():
@@ -14,6 +15,9 @@ def initial():
     if input_menu == '3':
         root_directory = input("folder to peak and delete ending with /\n")
         move_files_to_named_folders(root_directory)
+    if input_menu == '4':
+        root_directory = input("folder to peak and delete ending with /\n")
+        organize_files(root_directory)
     else:
         print("Invalid Option")
         initial()
@@ -47,5 +51,67 @@ def move_files_to_named_folders(root_dir):
             new_file_path = os.path.join(folder_path, item)
             shutil.move(item_path, new_file_path)
             print(f'Moved: {item_path} to {new_file_path}')
+
+
+def organize_files(directory_path):
+    # Prompt user to select pattern format
+    print("Select the pattern format:")
+    print("1. 01x01")
+    print("2. 1x01")
+    print("3. 01x1")
+    print("4. 1x1")
+    print("5. S01E01")
+
+    pattern_type = input("Enter the number corresponding to the pattern: ").strip()
+
+    # Get the regex pattern based on user input
+    if pattern_type == "1":
+        pattern = re.compile(r"(\d{2})x(\d{2})")
+    elif pattern_type == "2":
+        pattern = re.compile(r"(\d)x(\d{2})")
+    elif pattern_type == "3":
+        pattern = re.compile(r"(\d{2})x(\d)")
+    elif pattern_type == "4":
+        pattern = re.compile(r"(\d)x(\d)")
+    elif pattern_type == "5":
+        pattern = re.compile(r"S(\d{2})E(\d{2})")
+    else:
+        print("Invalid input. Please run the script again and select a valid option.")
+        return
+
+    # List to store matched files with their season and episode numbers
+    matched_files = []
+
+    # Iterate over all files in the directory
+    for filename in os.listdir(directory_path):
+        match = pattern.search(filename)
+        if match:
+            season = int(match.group(1))
+            episode = int(match.group(2))
+            matched_files.append((season, episode, filename))
+
+    # Sort the files by season and episode numbers
+    sorted_files = sorted(matched_files, key=lambda x: (x[0], x[1]))
+
+    # Create folders for each season and move the episodes
+    for season, episode, filename in sorted_files:
+        season_folder = os.path.join(directory_path, f"Season {season:02}")
+
+        # Create the season folder if it doesn't exist
+        if not os.path.exists(season_folder):
+            os.makedirs(season_folder)
+
+        # Move the episode file to the season folder
+        src_path = os.path.join(directory_path, filename)
+        dest_path = os.path.join(season_folder, filename)
+        shutil.move(src_path, dest_path)
+        print(f"Moved {filename} to {season_folder}")
+
+    # Remove only the episode files from the root folder that were moved
+    for _, _, filename in sorted_files:
+        file_path = os.path.join(directory_path, filename)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+            print(f"Deleted {filename} from root folder")
 
 initial()
