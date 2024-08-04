@@ -5,7 +5,7 @@ import re
 
 def initial():
 
-    input_menu=input("delete folder and evering in it (1)\nOnly peak in folder if its contains that folder anywhere (2)\nMove each file in the root directory into a new folder named after the file (3)\n")
+    input_menu=input("delete folder and evering in it (1)\nOnly peak in folder if its contains that folder anywhere (2)\nMove each file in the root directory into a new folder named after the file (3)\nMove each file in the root directory into a new folder named after the file (4) \n")
     if input_menu=='1':
         root_directory = input("folder to peak and delete ending with /\n")
         print_and_delete_sample_folders(root_directory)
