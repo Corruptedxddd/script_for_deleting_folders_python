@@ -174,10 +174,22 @@ def bigger_file_is_video_file(file1_path, file2_path, file1, file2, desc):
 
     if resolution1 > resolution2:
         print(f"{file1} has a larger resolution than {file2}")
+        directory_path = 'output'
+
+        # Check if the directory exists
+        if not os.path.exists(directory_path):
+            # Create the directory
+            os.makedirs(directory_path)
         output_file = f'output/{file1}'
         mux_video_audio(file1_path, file2_path, output_file, desc)
     elif resolution1 < resolution2:
         print(f"{file2} has a larger resolution than {file1}")
+        directory_path = 'output'
+
+        # Check if the directory exists
+        if not os.path.exists(directory_path):
+            # Create the directory
+            os.makedirs(directory_path)
         output_file = f'output/{file2}'
         mux_video_audio(file2_path, file1_path, output_file, desc)
     else:
