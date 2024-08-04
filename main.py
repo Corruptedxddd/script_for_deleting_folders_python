@@ -4,7 +4,7 @@ import re
 import sys
 import ffmpeg_multiplexer
 def initial_main():
-    input_menu=input("Delete subfolder in folder(1)\n"
+    input_menu=input("Delete subfolder in folder (1)\n"
                      "Only peak in folder if its contains that folder anywhere (2)\n"
                      "Move each file in the root directory into a new folder named after the file(3)\n"
                      "Create seasons folders correspondingly of episodes find in folder (4) \n"
