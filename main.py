@@ -2,40 +2,48 @@ import os
 import shutil
 import re
 import sys
-
-def initial():
-    input_menu=input("delete folder Sample folder(1)\nOnly peak in folder if its contains that folder anywhere (2)\nMove each file in the root directory into a new folder named after the file (3)\nMove each file in the root directory into a new folder named after the file (4) \n")
+import ffmpeg_multiplexer
+def initial_main():
+    input_menu=input("Delete subfolder in folder(1)\n"
+                     "Only peak in folder if its contains that folder anywhere (2)\n"
+                     "Move each file in the root directory into a new folder named after the file(3)\n"
+                     "Create seasons folders correspondingly of episodes find in folder (4) \n"
+                     "Multiplex Video and Audio - Used to combine high-quality video from an English TV series with Any dubbing that has poor video quality. (5) \n")
     if input_menu=='1':
-        root_directory = input("folder to peak and delete ending with (if root leave blank)/\n")
-        print_and_delete_sample_folders(root_directory+'/')
+        root_directory = input("folder to peak and delete ending with (if root leave blank)\n")
+        folder_to_find = input("Folder to find and delete\n")
+        print_and_delete_sample_folders(root_directory+'/',folder_to_find)
         sys.exit()
     if input_menu == '2':
-        root_directory = input("folder to peak and delete ending with (if root leave blank)/\n")
+        root_directory = input("folder to peak and delete ending with (if root leave blank)\n")
         print_subfolders(root_directory+'/')
         sys.exit()
     if input_menu == '3':
-        root_directory = input("folder to peak and delete ending with (if root leave blank)/\n")
+        root_directory = input("folder to peak and delete ending with (if root leave blank)\n")
         move_files_to_named_folders(root_directory+'/')
         sys.exit()
     if input_menu == '4':
-        root_directory = input("folder to peak and delete ending with (if root leave blank)/\n")
+        root_directory = input("folder to peak and delete ending with (if root leave blank)\n")
         organize_files(root_directory+'/')
+        sys.exit()
+    if input_menu == '5':
+        ffmpeg_multiplexer.initial()
         sys.exit()
     else:
         print("Invalid Option")
-        initial()
+        initial_main()
 
 def print_subfolders(root_dir):
     for dirpath, dirnames, filenames in os.walk(root_dir):
         for dirname in dirnames:
             subfolder_path = os.path.join(dirpath, dirname)
             print(subfolder_path)
-def print_and_delete_sample_folders(root_dir):
+def print_and_delete_sample_folders(root_dir,folder_to_find):
     for dirpath, dirnames, filenames in os.walk(root_dir):
         for dirname in dirnames:
             subfolder_path = os.path.join(dirpath, dirname)
             print(subfolder_path)
-            if dirname == 'Sample':
+            if dirname == folder_to_find:
                 try:
                     shutil.rmtree(subfolder_path)
                     print(f'Deleted: {subfolder_path}')
@@ -117,4 +125,4 @@ def organize_files(directory_path):
             os.remove(file_path)
             print(f"Deleted {filename} from root folder")
 
-initial()
+initial_main()

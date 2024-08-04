@@ -182,4 +182,3 @@ def bigger_file_is_video_file(file1_path, file2_path, file1, file2, desc):
         mux_video_audio(file2_path, file1_path, output_file, desc)
     else:
         print(f"{file1} and {file2} have the same resolution")
-initial()
