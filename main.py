@@ -12,19 +12,39 @@ def initial_main():
     if input_menu=='1':
         root_directory = input("folder to peak and delete ending with (if root leave blank)\n")
         folder_to_find = input("Folder to find and delete\n")
-        print_and_delete_sample_folders(root_directory+'/',folder_to_find)
+        if not root_directory:
+            root_directory = os.getcwd()
+            print_and_delete_sample_folders(root_directory + '/', folder_to_find)
+        else:
+            print_and_delete_sample_folders(root_directory+'/',folder_to_find)
+
         sys.exit()
     if input_menu == '2':
         root_directory = input("folder to peak and delete ending with (if root leave blank)\n")
-        print_subfolders(root_directory+'/')
+        if not root_directory:
+            root_directory = os.getcwd()
+            print_subfolders(root_directory + '/')
+        else:
+            print_subfolders(root_directory+'/')
+
         sys.exit()
     if input_menu == '3':
         root_directory = input("folder to peak and delete ending with (if root leave blank)\n")
-        move_files_to_named_folders(root_directory+'/')
+        if not root_directory:
+            root_directory = os.getcwd()
+            move_files_to_named_folders(root_directory + '/')
+        else:
+            move_files_to_named_folders(root_directory+'/')
+
         sys.exit()
     if input_menu == '4':
         root_directory = input("folder to peak and delete ending with (if root leave blank)\n")
-        organize_files(root_directory+'/')
+        if not root_directory:
+            root_directory = os.getcwd()
+            organize_files(root_directory + '/')
+        else:
+            organize_files(root_directory+'/')
+
         sys.exit()
     if input_menu == '5':
         ffmpeg_multiplexer.initial()
